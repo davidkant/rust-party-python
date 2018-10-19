@@ -1,0 +1,5 @@
+TO_RS = '>rs '
+FRM_RS = '<rs '
+NW_THRD = '+th '
+NOTIFY = '!!! '
+WAITING = '... '
