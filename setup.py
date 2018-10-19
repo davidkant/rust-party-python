@@ -7,10 +7,10 @@ with open('LICENSE.md') as f:
     license = f.read()
 
 requirements = [
-    'numpy'
-    'librosa'
-    'matplotlib'
-    'librosa'
+    'numpy',
+    'librosa',
+    'matplotlib',
+    'librosa',
     'pyosc'
 ]
 
