@@ -11,6 +11,7 @@ requirements = [
     'librosa',
     'matplotlib',
     'librosa',
+    'pyosc'
 ]
 
 setup(
