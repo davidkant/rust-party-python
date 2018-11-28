@@ -309,7 +309,6 @@ class Sample:
     @classmethod
     def from_json(cls, dct):
         """Return a Sample from JSON file dictionary."""
-        print dct
         return Sample(
             topology = dct['topology'],
             render_params = RenderParams.from_json(dct['render_params']),
