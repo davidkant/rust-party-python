@@ -185,6 +185,13 @@ class FeedbackParams:
         map_func = (lambda k,v: spec.unmap_spec(k, v)) if unmap is True else (lambda k,v: v)
         return [map_func(k, v) for k,v in self.params.items() if k in params]
 
+    def to_dataframe(self, params=None, unmap=False, spec=None, suffix=''):
+        """Convert to dataframe. For data analysis."""
+        params = self.params.keys() if params is None else params
+        map_func = (lambda k,v: spec.unamp_spec(k, v)) if unmap is True else (lambda k,v: v)
+        return OrderedDict([('{0}{1}'.format(k, suffix), map_func(k, v)) 
+                            for k,v in self.params.items() if k in params])
+
     def to_json(self):
         """Return a json serializable format."""
         rs_dict = OrderedDict([(to_snake_case(k), v) for k,v in self.params.items()])
@@ -270,6 +277,15 @@ class FeedbackQuadParams:
     def to_vec(self, params=None, unmap=False, spec=None):
         """Convert to vector. For data analysis."""
         return sum([p.to_vec(params=params, unmap=unmap, spec=spec) for p in self.params], [])
+
+    def to_dataframe(self, params=None, unmap=False, spec=None):
+        """Convert to dataframe. For data analysis."""
+        def merge(x):
+            """Merges a list of OrderedDicts."""
+            def helper(x,y): x.update(y); return x
+            return reduce(helper, [OrderedDict()] + x)
+        return merge([p.to_dataframe(params=params, unmap=unmap, spec=spec, suffix=['A', 'B', 'C', 'D'][i]) 
+                      for i,p in enumerate(self.params)])
 
     def to_json(self):
         """Return a json serializable format."""
