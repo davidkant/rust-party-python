@@ -91,6 +91,14 @@ class FeedbackParams:
         self.params = params_dict
 
     @classmethod
+    def from_dict(cls, params_dict):
+        """Create a FeedbackParams from dict. Guards against out-of-order params list."""
+        fbp = cls.default_params()
+        for k,v in params_dict.items():
+            fbp.params[k] = v
+        return fbp
+
+    @classmethod
     def default_params(cls, spec=None):
         pdict = OrderedDict([
             ('koscR', 18.6),
@@ -202,7 +210,7 @@ class FeedbackParams:
         py_dict.update({'outX': dct['out_scalars'][0]})
         py_dict.update({'outY': dct['out_scalars'][1]})
         py_dict.update({'outZ': dct['out_scalars'][2]})
-        return FeedbackParams(py_dict)
+        return FeedbackParams.from_dict(py_dict)
 
     def keys(self):
         return self.params.keys()
@@ -318,6 +326,18 @@ class Sample:
     def __repr__(self):
         return '<Sample(topology: {0.topology!r}, render_params: {0.render_params!r}, synth_params: {0.synth_params!r})>'.format(self)
 
+
+def test_feedbackparams_json():
+    """Test to/from json for FeedbackParams."""
+    import json
+    alpha = FeedbackParams.default_params()
+    with open("data_file.json", "w") as write_file:
+        json.dump(alpha.to_json(), write_file)
+    with open("data_file.json", "r") as read_file:
+        beta = FeedbackParams.from_json(json.loads(read_file.readline()))
+    print(alpha)
+    print(beta)
+    print(alpha.params == beta.params)
 
 def test_json():
     import json
