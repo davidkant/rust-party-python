@@ -1,5 +1,4 @@
 from spec import rust_spec
-from render import RenderParams
 
 from collections import OrderedDict
 import random
@@ -126,7 +125,7 @@ class FeedbackParams:
             ('outY', 1.0),
             ('outZ', 1.0),
         ])
-        
+
         if spec is not None:
             for k in spec.keys():
                 pdict[k] = spec[k].default if spec[k].default is not None else pdict[k]
@@ -181,7 +180,7 @@ class FeedbackParams:
 
     def to_vec(self, params=None, unmap=False, spec=None):
         """Convert to vector. For data analysis."""
-        params = self.params.keys() if params is None else params 
+        params = self.params.keys() if params is None else params
         map_func = (lambda k,v: spec.unmap_spec(k, v)) if unmap is True else (lambda k,v: v)
         return [map_func(k, v) for k,v in self.params.items() if k in params]
 
@@ -189,7 +188,7 @@ class FeedbackParams:
         """Convert to dataframe. For data analysis."""
         params = self.params.keys() if params is None else params
         map_func = (lambda k,v: spec.unamp_spec(k, v)) if unmap is True else (lambda k,v: v)
-        return OrderedDict([('{0}{1}'.format(k, suffix), map_func(k, v)) 
+        return OrderedDict([('{0}{1}'.format(k, suffix), map_func(k, v))
                             for k,v in self.params.items() if k in params])
 
     def to_json(self):
@@ -284,7 +283,7 @@ class FeedbackQuadParams:
             """Merges a list of OrderedDicts."""
             def helper(x,y): x.update(y); return x
             return reduce(helper, [OrderedDict()] + x)
-        return merge([p.to_dataframe(params=params, unmap=unmap, spec=spec, suffix=['A', 'B', 'C', 'D'][i]) 
+        return merge([p.to_dataframe(params=params, unmap=unmap, spec=spec, suffix=['A', 'B', 'C', 'D'][i])
                       for i,p in enumerate(self.params)])
 
     def to_json(self):
@@ -314,6 +313,25 @@ class FeedbackQuadParams:
 
     def __repr__(self):
         return '<FeedbackQuadParams({0.params!r}>'.format(self)
+
+
+class RenderParams(OrderedDict):
+    """Keep track of render params."""
+
+    def __init__(self, render_id="00", folder='~', filename='sample.wav', duration=20.0, wait=0.0):
+        OrderedDict.__init__(self, [
+            ('render_id', render_id),
+            ('folder', folder),
+            ('filename', filename),
+            ('duration', duration),
+            ('wait', wait)
+        ])
+
+    @classmethod
+    def from_json(cls, dct):
+        """Return a RenderParams from JSON file dictionary."""
+        return RenderParams(**dct)
+
 
 class Sample:
     """Keep track of render params and synth param.s"""

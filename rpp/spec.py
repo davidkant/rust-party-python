@@ -4,7 +4,7 @@ from collections import namedtuple
 
 SpecElem = namedtuple('SpecElem', ['lo', 'hi', 'curve', 'default'])
 
-class ControlSpec: 
+class ControlSpec:
     """A very basic SC-style control spec."""
 
     def __init__(self):
@@ -23,7 +23,7 @@ class ControlSpec:
             return self.linear_map(float(val), float(lo), float(hi))
         if curve is 'exp':
             return self.exp_map(float(val), float(lo), float(hi))
-        if curve is 'binary': 
+        if curve is 'binary':
             return self.binary_map(val)
 
     def unmap_spec(self, param, val):
@@ -78,7 +78,7 @@ def default_spec():
     spec.add('koscFreq', [1, 1, 'linear'])
     spec.add('koscError', [0.5, 15, 'linear'])
     spec.add('lowPassPot', [0, 1, 'linear'])
-    # --- OSC1 --- 
+    # --- OSC1 ---
     spec.add('koscRA', [0.1, 40.0, 'exp'])
     spec.add('preAmpPotA', [0, 1, 'linear'])
     spec.add('powAmpPotA', [0, 1, 'linear'])
@@ -100,7 +100,7 @@ def default_spec():
     spec.add('outXA', [0, 1, 'linear'])
     spec.add('outYA', [0, 1, 'linear'])
     spec.add('outZA', [0, 1, 'linear'])
-    # --- OSC2 --- 2 
+    # --- OSC2 --- 2
     spec.add('koscRB', [0, 40.0, 'linear'])
     spec.add('preAmpPotB', [0, 1, 'linear'])
     spec.add('powAmpPotB', [0, 1, 'linear'])
