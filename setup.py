@@ -14,7 +14,7 @@ requirements = [
 ]
 
 setup(
-    name='rust-party-python',
+    name='rpp',
     version='0.0.1',
     description='python side of the rust-party',
     long_description=readme,
