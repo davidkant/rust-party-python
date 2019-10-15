@@ -1,4 +1,4 @@
-from . spec import rust_spec
+from spec import rust_spec
 
 from collections import OrderedDict
 import random
@@ -385,7 +385,7 @@ def test_json():
 def test_to_vec():
     import spec
     alpha = FeedbackParams.default_params(spec=spec.rust_spec())
-    print alpha.to_vec(params=['koscR'], unmap=True, spec=spec.rust_spec())
+    print(alpha.to_vec(params=['koscR'], unmap=True, spec=spec.rust_spec()))
 
 
 if __name__ == "__main__":
