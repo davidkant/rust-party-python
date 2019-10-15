@@ -4,6 +4,7 @@ from collections import OrderedDict
 import random
 import copy
 import csv
+import functools
 
 
 abbr = {
@@ -255,7 +256,7 @@ class FeedbackQuadParams:
 
     def serialize(self):
         """Convert to list."""
-        return reduce(lambda x,y: x+y, [p.serialize() for p in self.params])
+        return functools.reduce(lambda x,y: x+y, [p.serialize() for p in self.params])
 
     def pretty_csv(self, filename='test.csv'):
         """Print as CSV. This is for display purposes NOT save and recall."""
@@ -282,7 +283,7 @@ class FeedbackQuadParams:
         def merge(x):
             """Merges a list of OrderedDicts."""
             def helper(x,y): x.update(y); return x
-            return reduce(helper, [OrderedDict()] + x)
+            return functools.reduce(helper, [OrderedDict()] + x)
         return merge([p.to_dataframe(params=params, unmap=unmap, spec=spec, suffix=['A', 'B', 'C', 'D'][i])
                       for i,p in enumerate(self.params)])
 
