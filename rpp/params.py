@@ -1,4 +1,4 @@
-from spec import rust_spec
+from . spec import rust_spec
 
 from collections import OrderedDict
 import random
