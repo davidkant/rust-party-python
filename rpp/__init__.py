@@ -1,2 +1,2 @@
-import spec
-import params
+from . import spec
+from . import params
